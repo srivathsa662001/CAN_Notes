@@ -160,9 +160,83 @@ Why 120 Ohm Termination in CAN Bus?
 ---
 
 ### 2. **Why Not Any Other Value?**
+
 - **120 ohms** is chosen because it matches the characteristic impedance of the twisted pair cable used in CAN networks.
-- Using a lower value (e.g., 60 ohms) would overdamp the signal, reducing voltage levels and possibly causing communication failures.
-- Using a higher value (e.g., 150 ohms) would underdamp the signal, allowing reflections and noise.
+High R → Underdamped (ringing)
+Correct 60 Ω → Critical (clean)
+Low R → Overdamped (slow)
+
+
+senario :
+You are comparing two CAN buses:
+
+Bus-1: 120 Ω at both ends
+
+Bus-2: 50 Ω at both ends
+
+And asking:
+
+Is the bus with 50 Ω termination more heavily loaded and overdamped?
+
+Let’s answer step-by-step in a clear engineering way.
+
+1️⃣ Calculate total bus resistance
+
+Termination resistors at both ends are in parallel.
+
+Bus-1 (120 Ω + 120 Ω)
+Rtotal=60 Ω
+R
+total
+=60Ω
+
+✔ This is the standard CAN design
+✔ Gives proper impedance match (~60 Ω differential)
+✔ Signal is critically damped (ideal)
+
+Bus-2 (50 Ω + 50 Ω)
+Rtotal=25 Ω
+R
+total
+=25Ω
+
+This is:
+
+Much lower than normal 60 Ω
+
+Draws more current from CAN transceiver
+
+Loads the line heavily
+
+So yes:
+
+➡️ This bus is heavier loaded than the 120 Ω-terminated bus
+
+2️⃣ Effect on signal damping
+
+When resistance becomes too low:
+
+Energy is absorbed very quickly
+
+Signal cannot rise/fall fast
+
+Edges become slow and rounded
+
+No ringing
+
+This behavior corresponds to:
+
+➡️ Overdamped response
+
+So your statement is correct:
+
+✔ CAN with 50 Ω terminations → heavily loaded
+✔ Total resistance 25 Ω → overdamped waveform
+
+3️⃣ Simple comparison table
+Termination at ends	Total bus R	Loading	Damping	Signal quality
+120 Ω + 120 Ω	60 Ω	Normal	Critical	✅ Best
+50 Ω + 50 Ω	25 Ω	Heavy	Overdamped	❌ Slow edges
 
 ---
 
