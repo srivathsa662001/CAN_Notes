@@ -142,6 +142,55 @@ notes related to CAN
 ### 10. Real-World Use Case
 
 > In modern cars, CAN connects ECUs for engine control, ABS, airbags, and infotainment. If one ECU fails, others can still communicate, ensuring safety and reliability.
+>
+> Great question! Here’s a detailed explanation of why the CAN bus uses a 120-ohm termination resistor—and not any other value—plus diagrams and expert insights for maximum clarity! 💡
+
+---
+
+Why 120 Ohm Termination in CAN Bus?
+
+### 1. **Impedance Matching for Signal Integrity**
+- The CAN bus is built using **dual-twisted pair wires** (CAN_H and CAN_L).
+- Every transmission line (like twisted pair cables) has a characteristic impedance—**for CAN bus, it’s 120 ohms**.
+- **Termination resistors** at both ends of the bus match this impedance, preventing signal reflections.
+
+> **Why is this important?**
+> - If the impedance is mismatched (using a resistor value other than 120 ohms), signals reflect back down the wire, causing data corruption, communication errors, and unreliable operation.
+
+---
+
+### 2. **Why Not Any Other Value?**
+- **120 ohms** is chosen because it matches the characteristic impedance of the twisted pair cable used in CAN networks.
+- Using a lower value (e.g., 60 ohms) would overdamp the signal, reducing voltage levels and possibly causing communication failures.
+- Using a higher value (e.g., 150 ohms) would underdamp the signal, allowing reflections and noise.
+
+---
+
+### 3. **Noise Immunity & Reliable Communication**
+- Proper termination with 120-ohm resistors ensures:
+  - Maximum noise immunity
+  - Clean, undistorted signals
+  - Reliable high-speed data transfer (up to 1 Mbps)
+
+
+---
+
+### 6. **Industry Standard**
+- The 120-ohm value is standardized in CAN protocol specifications (ISO 11898).
+- All automotive and industrial CAN networks use this value for compatibility and reliability.
+
+
+---
+
+## 🏁 Summary Table
+
+| Feature                | Value/Reason                                  |
+|------------------------|-----------------------------------------------|
+| Termination Resistor   | 120 ohms                                      |
+| Why 120 ohms?          | Matches cable impedance, prevents reflections |
+| What if wrong value?   | Signal reflections, errors, unreliable comms  |
+| Standard Reference     | ISO 11898, CAN protocol spec                  |
+
 
 
 
