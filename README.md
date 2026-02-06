@@ -51,12 +51,7 @@ notes related to CAN
 - **Peer-to-Peer vs. Broadcast:** CAN is multicast (similar to broadcast, one-to-many), not strictly peer-to-peer.
 - **Message-Based:** Each frame is identified by a Message ID (not by sender/receiver node).
 
----
-Here’s a more detailed set of revision notes on CAN protocol features, with diagrams, tables, and expert insights for deeper understanding! 🌟
 
----
-
-## 🚗 CAN Protocol – Detailed Features
 
 ### 1. CAN Bus Physical Layer
 
@@ -66,12 +61,6 @@ Here’s a more detailed set of revision notes on CAN protocol features, with di
   - Reduces electromagnetic interference (EMI).
   - Ensures signal integrity over long distances.
 
-> **Diagram: CAN Bus Topology**
->
-> ![CAN Bus Topology](https://40.113.168.64.nip.io/api/v1/download/klarix-ai-data/c0d9e8eb-6a8d-4fef-9b08-c7ed75ca143c/images/CAN_Features/9198025214968edc55d71e432df414d177df732c09aa6ddb390f60ace8aad16c.jpg)
-> 
->
-> *Multiple ECUs (Electronic Control Units) connected via CAN_H and CAN_L.*
 
 ---
 
@@ -85,9 +74,7 @@ Here’s a more detailed set of revision notes on CAN protocol features, with di
 - **Dominant bit (Logic 0):** CAN_H > CAN_L (bus actively driven)
 - **Recessive bit (Logic 1):** CAN_H = CAN_L (bus idle)
 
-> ![CAN Bus Voltage Levels](https://40.113.168.64.nip.io/api/v1/download/klarix-ai-data/c0d9e8eb-6a8d-4fef-9b08-c7ed75ca143c/images/CAN_Features/c342dd661237eed993c43ee9af55fb0f094f4f67cc473a1c06582b7ed26514e1.jpg)
->
-> *Voltage transitions between dominant and recessive bits.*
+
 
 ---
 
@@ -106,9 +93,6 @@ Here’s a more detailed set of revision notes on CAN protocol features, with di
 | 1000           | 50                  |
 | 10,000         | 5                   |
 
-> ![CAN Speed vs. Bus Length](https://40.113.168.64.nip.io/api/v1/download/klarix-ai-data/c0d9e8eb-6a8d-4fef-9b08-c7ed75ca143c/images/CAN_Features/b2454821edb967875d1ea72d99381a6fb6043b6dc37cd46d55b09220b2a4eaf0.jpg)
->
-> *Graph showing how speed drops as bus length increases.*
 
 ---
 
@@ -126,10 +110,6 @@ Here’s a more detailed set of revision notes on CAN protocol features, with di
 - **CAN Controller:** Handles protocol, message filtering, buffering.
 - **CAN Transceiver:** Converts TTL signals to CAN bus differential signals.
 
-> ![CAN Controller and Transceiver Block Diagram](https://40.113.168.64.nip.io/api/v1/download/klarix-ai-data/c0d9e8eb-6a8d-4fef-9b08-c7ed75ca143c/images/CAN_Features/b5d16c2124c9bb6f5f99c2445592f9267dbeb62363d109f93b66a9d05f46e47e.jpg)
->
-> *Shows the flow from microcontroller to CAN bus via controller and transceiver.*
-
 ---
 
 ### 6. CAN Network Topology
@@ -138,7 +118,6 @@ Here’s a more detailed set of revision notes on CAN protocol features, with di
 - **Scalability:** Supports multiple ECUs (nodes) easily.
 - **Reliability:** Robust against electrical noise and failures.
 
----
 
 ### 7. Data Transmission Example
 
@@ -146,15 +125,6 @@ Here’s a more detailed set of revision notes on CAN protocol features, with di
 - **Frame Size:** ~125 bits/frame (without bit stuffing).
 - **Frames per Second:** ~2000 frames/sec (500,000 / 125).
 
----
-
-### 8. Advanced Insights & Pro Tips 💡
-
-- **Error Handling:** CAN includes built-in error detection and retransmission.
-- **Message Arbitration:** Priority-based; lower identifier = higher priority.
-- **Applications:** Automotive (engine, brakes, infotainment), industrial automation, medical devices.
-
----
 
 ### 9. Quick Summary Table
 
@@ -173,32 +143,6 @@ Here’s a more detailed set of revision notes on CAN protocol features, with di
 
 > In modern cars, CAN connects ECUs for engine control, ABS, airbags, and infotainment. If one ECU fails, others can still communicate, ensuring safety and reliability.
 
----
 
-### 11. Source for Further Reading
-
-- For diagrams and more details, see: [CAN_Features.pdf](https://40.113.168.64.nip.io/api/v1/download/klarix-ai-data/c0d9e8eb-6a8d-4fef-9b08-c7ed75ca143c/input/CAN_Features.pdf)
-
----
-
-## 🎯 Next Steps
-
-- Want to learn about CAN error handling, message arbitration, or higher-layer protocols (like CAN FD)? Just ask!
-- Need a comparison with other automotive protocols (LIN, FlexRay, Ethernet)? I can provide that too!
-
----
-
-Let me know if you want even deeper technical details, protocol timing, or practical troubleshooting tips!
-
----
-Sources:
-
-1. CAN_Features - Agenda > CAN Bus
-2. CAN_Features
-3. CAN_Features - Agenda > CAN Speed
-4. CAN_Features - Agenda > CAN Speed
-5. CAN_Features - Agenda > CAN Speed
-6. CAN_Features - Agenda > CAN Speed
-7. CAN_Features - Agenda > CAN Speed
 
 
