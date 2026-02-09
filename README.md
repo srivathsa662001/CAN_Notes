@@ -362,3 +362,82 @@ Permanent Failure (Bus Off): If a node fails consistently, it withdraws itself f
 
 
 
+##########################################################################################
+
+CAN Frmes 
+
+### 1. Data Frame
+
+The Data Frame is the most common and essential frame type in CAN. Its primary purpose is to carry actual data from a transmitter node to all other receiver nodes on the bus.
+
+    Standard Data Frame: Utilizes an 11-bit message identifier.
+
+Extended Data Frame: Utilizes a 29-bit message identifier, which is split into an 11-bit "Base ID" and an 18-bit "ID Extension".
+
+Usage: Whenever people refer to "CAN frames" in general conversation, they are almost always referring to Data Frames.
+
+### 2. Remote Frame
+
+A Remote Frame is a request mechanism used by a node that requires specific data.
+
+    How it Works: A node wanting a specific Data Frame sends a Remote Frame with the same Message ID as the requested data.
+
+Response: The node that "owns" or produces that data frame responds by transmitting the requested Data Frame onto the bus.
+
+Current Status: In modern CAN implementations, Remote Frames are largely considered obsolete and are rarely used.
+
+### 3. Error Frame
+
+The Error Frame is a vital reliability feature that signals an error condition detected during the current transmission.
+
+    Detection: Errors can be detected by the transmitter node itself or any of the receiver nodes on the bus.
+
+Action: When a node detects an error, it immediately "destroys" the current data frame by transmitting an Error Frame.
+
+Signaling: This broadcasted Error Frame informs all other nodes on the network that the previous data was invalid and should be ignored.
+
+### 4. Overload Frame
+
+An Overload Frame is used by a node to request a delay between consecutive Data Frames.
+
+    Purpose: If a node is "overloaded" (busy processing the previous message) and cannot yet handle the next one, it sends this frame to "buy time".
+
+Mechanism: It intentionally keeps the bus busy, preventing other nodes from starting a new transmission while the overloaded node finishes its tasks.
+
+Format: The physical structure of an Overload Frame is identical to that of an Error Frame.
+
+Limit: A node is restricted to sending a maximum of three consecutive Overload Frames after any single Data Frame.
+
+### Summary Comparison Table
+Frame Type	Primary Purpose	Key Characteristic
+Data Frame	
+
+Transmit information
+
+
+11-bit (Standard) or 29-bit (Extended) ID
+
+Remote Frame	
+
+Request information
+	
+
+Uses the same ID as the requested data; now obsolete
+
+Error Frame	
+
+Signal transmission error
+		
+
+Destroys current frame to notify all nodes
+
+Overload Frame	
+
+Request processing time
+
+Buys time by keeping bus busy; max 3 in a row
+
+
+
+
+
