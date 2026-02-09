@@ -364,7 +364,7 @@ Permanent Failure (Bus Off): If a node fails consistently, it withdraws itself f
 
 ##########################################################################################
 
-CAN Frmes 
+CAN Frames 
 
 ### 1. Data Frame
 
