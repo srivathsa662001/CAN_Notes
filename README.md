@@ -145,6 +145,11 @@ notes related to CAN
 >
 > Great question! Here’s a detailed explanation of why the CAN bus uses a 120-ohm termination resistor—and not any other value—plus diagrams and expert insights for maximum clarity! 💡
 
+#########################################################################################################################################################################################################################
+
+
+
+
 ---
 
 Why 120 Ohm Termination in CAN Bus?
@@ -264,6 +269,94 @@ Termination at ends	Total bus R	Loading	Damping	Signal quality
 | Why 120 ohms?          | Matches cable impedance, prevents reflections |
 | What if wrong value?   | Signal reflections, errors, unreliable comms  |
 | Standard Reference     | ISO 11898, CAN protocol spec                  |
+
+
+
+#################################################################################################################################################
+
+
+
+can properties
+
+### 1. Physical Layer & Network Topology
+
+CAN is built for robust communication in environments like vehicles or industrial floors.
+
+    Wired Protocol: It uses a physical wired connection between nodes.
+
+Bus Topology: All nodes are connected to a single common bus line.
+
+Serial Communication (N=1): It transmits data bit-by-bit over the bus rather than using multiple parallel lines.
+
+Bit Order: CAN transmits the Most Significant Bit (MSB) first.
+
+Half-Duplex: A node can transmit and receive, but it cannot do both simultaneously on the same bus.
+
+### 2. Synchronization & Timing
+
+Understanding how nodes "agree" on time is critical for data integrity.
+
+    Asynchronous Nature: CAN does not require a separate, dedicated clock signal line.
+
+Self-Synchronization: The transmitter and receiver synchronize themselves based on the edges of the data frame itself.
+
+Quantized Time: Unlike synchronous protocols (like SPI) where a node must wait for a specific clock pulse or time slot, CAN nodes can initiate transmission as soon as they have data and the bus is free.
+
+### 3. Addressing: Message-Based vs. Node-Based
+
+This is a frequent interview topic. CAN is unique because it doesn't care "who" is talking, but "what" is being said.
+
+    Message-Based Protocol: Frames are identified by a Message ID, not by the identity of the transmitting or receiving node.
+
+Broadcasting/Multicasting: When a node transmits, the message is sent to all nodes on the bus simultaneously (one-to-many).
+
+Roles of the Message ID:
+
+    Data Content: Identifies what the data represents (e.g., Oil Pressure).
+
+Priority: If two nodes transmit at the same time, the Message ID determines which frame wins access to the bus.
+
+Filtering: Helps receiving nodes decide if the message is relevant to them.
+
+### 4. Hardware Message Filtering
+
+To prevent the main processor (CPU) from being overwhelmed by irrelevant data, CAN uses hardware filters.
+
+    The Mechanism: Filtering happens within the CAN controller hardware using two parameters: the Mask and the Filter Value.
+
+The Logic: A node accepts a message only if the following condition is true:
+
+    (Message_ID & Mask) == (Filter_Value & Mask) 
+
+Example: Node A and Node B might "Filter IN" a message to process it, while Node C "Filters OUT" the same message to ignore it based on their specific hardware configurations.
+
+### 5. Bus Access (CSMA/CA)
+
+CAN uses a specific protocol to manage how nodes "grab" the bus.
+
+    Carrier Sense (CS): A node must "listen" to the bus to determine if another transmission is already in progress before it starts talking.
+
+Multiple Access (MA): Multiple nodes have equal access to start a transmission when the bus is idle.
+
+Collision Avoidance (CA): If two nodes start at the same time, CAN uses a "Collision Resolution" method where the higher priority message (lower ID) continues without interruption, avoiding a data "crash".
+
+### 6. Acknowledgement (ACK) Method
+
+CAN has a highly efficient way of confirming that data was received.
+
+    In-Frame ACK: There is no separate "I got it" message sent after the data frame.
+
+The ACK Field: Every CAN frame has a specific bit field where receivers must signal successful reception.
+
+Bus Load Efficiency: This allows for acknowledgement without adding extra traffic or increasing the bus load.
+
+### 7. Reliability: Node Failures
+
+CAN is designed to be "fault-tolerant" by identifying failing nodes.
+
+    Temporary Failure: Occurs when a node encounters an error that destroys only the current ongoing frame.
+
+Permanent Failure (Bus Off): If a node fails consistently, it withdraws itself from the bus entirely, performing no further transmissions or receptions to protect the rest of the network.
 
 
 
