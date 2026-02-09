@@ -408,34 +408,13 @@ Format: The physical structure of an Overload Frame is identical to that of an E
 
 Limit: A node is restricted to sending a maximum of three consecutive Overload Frames after any single Data Frame.
 
-### Summary Comparison Table
-Frame Type	Primary Purpose	Key Characteristic
-Data Frame	
 
-Transmit information
-
-
-11-bit (Standard) or 29-bit (Extended) ID
-
-Remote Frame	
-
-Request information
-	
-
-Uses the same ID as the requested data; now obsolete
-
-Error Frame	
-
-Signal transmission error
-		
-
-Destroys current frame to notify all nodes
-
-Overload Frame	
-
-Request processing time
-
-Buys time by keeping bus busy; max 3 in a row
+| Frame Type                                  | Primary Purpose                                 | Key Characteristics                                                                                                                             |
+| ------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Data Frame**                              | Transmit actual data/information on the CAN bus | Uses **11-bit (Standard)** or **29-bit (Extended)** identifier; contains **data field** (0–8 bytes in Classical CAN, up to 64 bytes in CAN-FD). |
+| **Remote Frame** *(obsolete in modern CAN)* | Request data from another node                  | Uses the **same ID as the requested Data Frame**; **no data field**; mostly replaced by higher-layer protocols (e.g., UDS).                     |
+| **Error Frame**                             | Signal a transmission error                     | **Destroys the current frame** and notifies **all nodes**; forces **retransmission** of the corrupted message.                                  |
+| **Overload Frame**                          | Request extra processing time                   | Temporarily **keeps the bus busy**; maximum of **two consecutive overload frames** allowed by CAN standard.                                     |
 
 
 
