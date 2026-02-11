@@ -420,3 +420,52 @@ Limit: A node is restricted to sending a maximum of three consecutive Overload F
 
 
 
+## 1. Standard Remote Frame Structure
+
+The standard CAN frame  consists of several bit fields. A Remote Frame is identical to a Data Frame but lacks a Data Field.
+### Field-by-Field Breakdown
+
+    SOF (Start of Frame): 1 bit. A dominant '0' that signals the start of a transmission and allows nodes to synchronize.
+
+Arbitration Field: 12 bits.
+
+    Identifier(message id) can be 11 bit or 29 bit  : 11 bits. Represents the message priority and content.
+
+RTR (Remote Transmission Request): 1 bit. Dominant '0' for Data Frames and Recessive '1' for Remote Frames.
+
+
+
+
+Control Field: 6 bits.
+
+    IDE (Identifier Extension bit): 1 bit. Dominant for standard 11-bit IDs.
+
+r: 1 bit. Reserved bit for future use.
+
+DLC (Data Length Code): 4 bits. Indicates the number of bytes in the data field (0–8 bytes).
+
+
+
+
+CRC Field: 16 bits.
+
+    CRC Sequence: 15 bits. Used for cyclic redundancy checks to detect bit errors.
+
+    DEL (CRC Delimiter): 1 bit. A recessive bit marking the end of the CRC sequence. or can tell it is the time given for receiver to calculate checksum
+
+ACK Field: 2 bits.
+
+    ACK Slot: 1 bit. The transmitter sends a recessive bit; any receiver that correctly receives the frame overwrites it with a dominant bit to acknowledge.
+
+    DEL (ACK Delimiter): 1 bit. A recessive bit marking the end of the ACK field. can tell it is the time given for receiver to calculate Ack
+
+EOF (End of Frame): 7 bits. A sequence of 7 recessive bits signaling the end of the frame.
+
+ITM (Intermission): 3 bits. The minimum number of recessive bits separating consecutive messages.
+
+every dfata frame ends with  11 consecutive recessive  
+1 bit of AD
+7 bit of EOF
+3 bit of ITM
+
+
