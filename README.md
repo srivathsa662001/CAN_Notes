@@ -502,13 +502,13 @@ Recessive (1): Indicates an Extended Frame.
 
 
 
-CAN Bit Segmentation Notes
+### CAN Bit Segmentation Notes
 
 Bit segmentation refers to the process of dividing a single CAN bit into specific time segments to manage bit monitoring and synchronization across the network.
 
 ### 1. Bit Monitoring (Sampling)
 
-    Definition: The process of monitoring the bus to determine the current bit value.
+ Definition: The process of monitoring the bus to determine the current bit value.
 
 Transmitting (Tx) Node: First puts a bit value on the bus and then monitors the bus to verify if the value was taken properly.
 
@@ -520,7 +520,7 @@ Sampling Timing: The exact point at which a bit is read is determined by the bit
 
 Every CAN bit is divided into four distinct segments:
 
-    Synchronization Segment (Sync Seg): The segment where bit transmission begins.
+Synchronization Segment (Sync Seg): The segment where bit transmission begins.
 
 Propagation Segment (Prop Seg): This segment is used to compensate for physical propagation delays on the bus.
 
@@ -530,7 +530,7 @@ Phase Segment 2 (PS2): The final segment of the bit, occurring after the sample 
 
 ### 3. Critical Timing Requirements
 
-    Sample Point: Bit monitoring (sampling) happens specifically after Phase Segment 1.
+Sample Point: Bit monitoring (sampling) happens specifically after Phase Segment 1.
 
 Integrity: Both the transmission of the bit and its propagation across the wires must be completely finished for every node on the bus before sampling occurs.
 
