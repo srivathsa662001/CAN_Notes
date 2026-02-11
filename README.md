@@ -437,10 +437,10 @@ RTR (Remote Transmission Request): 1 bit. Dominant '0' for Data Frames and Reces
 
 
 Control Field: 6 bits.
+Reserved bits (r0, r1).
+ r0 : IDE (Identifier Extension bit): 1 bit. Dominant for standard 11-bit IDs.
 
-    IDE (Identifier Extension bit): 1 bit. Dominant for standard 11-bit IDs.
-
-r: 1 bit. Reserved bit for future use.
+ r1 bit. Reserved bit for future use.
 
 DLC (Data Length Code): 4 bits. Indicates the number of bytes in the data field (0–8 bytes).
 
@@ -497,4 +497,42 @@ IDE (Identifier Extension Indication):
     Dominant (0): Indicates a Standard Frame.
 
 Recessive (1): Indicates an Extended Frame.
+
+
+
+
+
+CAN Bit Segmentation Notes
+
+Bit segmentation refers to the process of dividing a single CAN bit into specific time segments to manage bit monitoring and synchronization across the network.
+
+### 1. Bit Monitoring (Sampling)
+
+    Definition: The process of monitoring the bus to determine the current bit value.
+
+Transmitting (Tx) Node: First puts a bit value on the bus and then monitors the bus to verify if the value was taken properly.
+
+Receiving (Rx) Node: Samples the bus to read the incoming bit value.
+
+Sampling Timing: The exact point at which a bit is read is determined by the bit segments.
+
+### 2. The Four Bit Segments
+
+Every CAN bit is divided into four distinct segments:
+
+    Synchronization Segment (Sync Seg): The segment where bit transmission begins.
+
+Propagation Segment (Prop Seg): This segment is used to compensate for physical propagation delays on the bus.
+
+Phase Segment 1 (PS1): A segment occurring before the sample point.
+
+Phase Segment 2 (PS2): The final segment of the bit, occurring after the sample point.
+
+### 3. Critical Timing Requirements
+
+    Sample Point: Bit monitoring (sampling) happens specifically after Phase Segment 1.
+
+Integrity: Both the transmission of the bit and its propagation across the wires must be completely finished for every node on the bus before sampling occurs.
+
+Uniformity: This timing ensures that every node on the network reads the exact same value for a specific bit.
 
