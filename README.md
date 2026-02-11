@@ -417,7 +417,7 @@ Limit: A node is restricted to sending a maximum of three consecutive Overload F
 | **Overload Frame**                          | Request extra processing time                   | Temporarily **keeps the bus busy**; maximum of **two consecutive overload frames** allowed by CAN standard.                                     |
 
 
-
+<img width="176" height="138" alt="canfram" src="https://github.com/user-attachments/assets/11d88763-8e9b-413a-8bb8-a7b9fd314d09" />
 
 
 ## 1. Standard Remote Frame Structure
