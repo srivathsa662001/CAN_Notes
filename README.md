@@ -465,7 +465,36 @@ ITM (Intermission): 3 bits. The minimum number of recessive bits separating cons
 
 every dfata frame ends with  11 consecutive recessive  
 1 bit of AD
+
 7 bit of EOF
+
 3 bit of ITM
 
+
+
+# CAN Extended Frame Format & System Diagnostics
+## 1. Extended CAN Frame Format (2.0B)
+
+The Extended Frame was proposed because the 11-bit identifier in the standard format (allowing only 211 or 2048 unique messages, though source notes suggest sufficiency limits around 512) was not always enough for complex real-time scenarios.
+### Key Characteristics
+
+    29-Bit Identifier: Provides a significantly larger range of unique message IDs.
+
+Co-existence: Both Standard and Extended frames can exist on the same network.
+
+Differentiating Bit: The IDE bit is used to distinguish between Standard and Extended formats.
+
+### Additional Bits in Extended Format
+
+    SRR (Substitute Remote Request):
+
+        Occupies the position of the RTR bit in the Standard frame.
+
+It is a single bit and is always Recessive.
+
+IDE (Identifier Extension Indication):
+
+    Dominant (0): Indicates a Standard Frame.
+
+Recessive (1): Indicates an Extended Frame.
 
