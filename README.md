@@ -536,3 +536,53 @@ Integrity: Both the transmission of the bit and its propagation across the wires
 
 Uniformity: This timing ensures that every node on the network reads the exact same value for a specific bit.
 
+
+
+## Bus Arbitration
+
+1. Definition of Bus Arbitration
+
+    Purpose: If multiple nodes attempt to transmit a frame simultaneously on the bus, the conflict is resolved through a process called Bus Arbitration.
+
+    Conflict Resolution: Only one transmitter is allowed to communicate at a time to prevent data collisions.
+
+    Wait Mechanism: A node must wait for the bus to become IDLE before it can begin transmitting its message.
+
+2. The Arbitration Field
+
+The following bits participate in the arbitration process and collectively form the Arbitration Field:
+
+    SOF (Start of Frame).
+
+Message ID (Identifier).
+
+RTR (Remote Transmission Request).
+
+3. The "Dominant Wins" Rule
+
+    Logical Levels:
+
+        Dominant Bus Level = 0.
+
+Recessive Bus Level = 1.
+
+Mechanism: Arbitration is performed bit-by-bit across the field. If two nodes put different bits on the bus simultaneously, the bus takes the Dominant (0) value and ignores the Recessive (1) bit.
+
+Priority: Because the lowest numerical value is "0," the message with the lowest ID is considered the highest priority and wins the arbitration.
+
+4. Outcomes of Arbitration
+
+    The Winner:
+
+        Becomes the Transmitter node.
+
+Continues to send its complete frame without interruption.
+
+The Losers:
+
+    Immediately switch to Receiving (Rx) mode.
+
+Wait until the bus becomes idle again (after the current message and the Intermission Field).
+
+Automatically try to re-transmit their frames as soon as the bus is free, ensuring no message is lost.
+
