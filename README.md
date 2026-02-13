@@ -552,7 +552,7 @@ Uniformity: This timing ensures that every node on the network reads the exact s
 
 The following bits participate in the arbitration process and collectively form the Arbitration Field:
 
-    SOF (Start of Frame).
+   SOF (Start of Frame).
 
 Message ID (Identifier).
 
@@ -562,7 +562,7 @@ RTR (Remote Transmission Request).
 
     Logical Levels:
 
-        Dominant Bus Level = 0.
+   Dominant Bus Level = 0.
 
 Recessive Bus Level = 1.
 
@@ -574,15 +574,57 @@ Priority: Because the lowest numerical value is "0," the message with the lowest
 
     The Winner:
 
-        Becomes the Transmitter node.
+    Becomes the Transmitter node.
 
 Continues to send its complete frame without interruption.
 
 The Losers:
 
-    Immediately switch to Receiving (Rx) mode.
+  Immediately switch to Receiving (Rx) mode.
 
 Wait until the bus becomes idle again (after the current message and the Intermission Field).
 
 Automatically try to re-transmit their frames as soon as the bus is free, ensuring no message is lost.
+
+
+
+## CAN Bit Stuffing Revision Notes
+
+Bit stuffing is a technique used in the CAN protocol to ensure that receivers stay synchronized with the transmitter by forcing periodic signal edges.
+
+1. The Need for Bit Stuffing
+
+    Asynchronous Nature: CAN does not have a separate clock signal to tell receivers when a bit starts or ends.
+
+Initial Synchronization: All nodes initially synchronize using the falling edge of the SOF (Start of Frame) bit.
+
+Drift & Tolerance: Every receiver has its own internal clock. Over time, small differences in clock speed (tolerance errors) build up, causing the nodes to drift out of sync.
+
+Resynchronization: Nodes need to see a "bus state change" (an edge) to readjust their internal clocks and stay in sync.
+
+The Risk: If the bus value stays constant (all 0s or all 1s) for too long, there are no edges, and receivers may miscount the bits.
+
+2. What is Bit Stuffing?
+
+    The Rule: If the CAN bus maintains a constant value for 5 consecutive bits, the transmitter automatically inserts a complementary bit (the opposite value) as the 6th bit.
+
+Example:
+
+    Original Data: 1 1 1 1 1
+
+    Stuffed Stream: 1 1 1 1 1 0 (The 0 is the stuffed bit).
+
+Process:
+
+  Transmitter (Tx): Inserts the extra bit before sending the frame on the bus.
+
+Receiver (Rx): Detects the 6th bit as a "stuffed" bit, removes it (De-stuffing), and then processes the original data.
+
+3. Where does it apply?
+
+    Active Area: Bit stuffing applies from the beginning of the SOF until the end of the CRC sequence (Checksum field).
+
+Fixed Form (No Stuffing): It is not applicable to parts of the frame that have a fixed format, specifically from the CRC Delimiter (CD) to the Intermission Field (IFS).
+
+CRC Computation: Interestingly, stuffed bits are included in the CRC calculation to ensure the integrity of the entire bit stream.
 
