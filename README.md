@@ -610,9 +610,9 @@ The Risk: If the bus value stays constant (all 0s or all 1s) for too long, there
 
 Example:
 
-    Original Data: 1 1 1 1 1
+  Original Data: 1 1 1 1 1
 
-    Stuffed Stream: 1 1 1 1 1 0 (The 0 is the stuffed bit).
+   Stuffed Stream: 1 1 1 1 1 0 (The 0 is the stuffed bit).
 
 Process:
 
@@ -627,4 +627,42 @@ Receiver (Rx): Detects the 6th bit as a "stuffed" bit, removes it (De-stuffing),
 Fixed Form (No Stuffing): It is not applicable to parts of the frame that have a fixed format, specifically from the CRC Delimiter (CD) to the Intermission Field (IFS).
 
 CRC Computation: Interestingly, stuffed bits are included in the CRC calculation to ensure the integrity of the entire bit stream.
+
+
+## question
+
+Since CAN is an asynchronous protocol, it does not use a shared clock line to keep nodes in sync. Instead, synchronization is performed dynamically using the edges of the data bits themselves.
+
+Here is how the synchronization process works to ensure every node reads the message correctly:
+1. Hard Synchronization (The Starting Point)
+
+Every CAN message begins with a Start of Frame (SOF) bit, which is a transition from Recessive to Dominant.
+
+   Action: All receiving nodes on the bus look for this specific falling edge.
+
+Result: This edge acts as the "starting gun," forcing every node to restart its internal bit timer at the exact same moment.
+
+2. Resynchronization (Maintenance)
+
+Once a message starts, the receivers' internal clocks may begin to drift slightly due to hardware tolerances.
+
+   Edge Detection: Every time the bus switches from 0 to 1 or 1 to 0, the receiver detects a "bus state change" (an edge).
+
+Clock Adjustment: The receiver compares where the edge actually occurred against where its internal clock expected the edge to be. It then "re-adjusts" its internal timing to match the transmitter.
+
+3. The Role of Bit Stuffing
+
+The most critical part of keeping nodes in sync during a long message is ensuring there are enough edges to look at.
+
+  The Problem: If a message has a long string of zeros (000000...), the signal stays flat, and there are no edges for resynchronization.
+
+The Solution: As you saw in the bit stuffing notes, the protocol forces an edge by inserting a complementary bit after every 5 identical bits.
+
+Impact: This ensures that even in a long data field, an edge occurs at least every 5 bits, allowing the receiver to frequently "check-in" and stay synchronized.
+
+4. Bit Segmentation
+
+To make this synchronization possible, each bit is divided into segments (Sync, Prop, Phase 1, Phase 2).
+
+   Phase Segments: These segments are specifically designed to be shortened or lengthened by the controller during Resynchronization to compensate for the clock drift.
 
